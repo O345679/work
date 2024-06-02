@@ -31,20 +31,6 @@ class Figure:
         raise NotImplementedError
 
 
-class Square(Figure):
-    def __init__(self, x, y, side):
-        super().__init__("Квадрат")
-        self.x = x
-        self.y = y
-        self.side = side
-
-    def perimeter(self):
-        return 4 * self.side
-
-    def area(self):
-        return self.side**2
-
-
 class Rectangle(Figure):
     def __init__(self, x1, y1, x2, y2):
         super().__init__("Прямокутник")
@@ -60,6 +46,12 @@ class Rectangle(Figure):
         return abs(self.x2 - self.x1) * abs(self.y2 - self.y1)
 
 
+class Square(Rectangle):
+    def __init__(self, x, y, side):
+        super().__init__(x, y, x - side, y + side)
+        self.side = side
+
+
 class Circle(Figure):
     def __init__(self, x, y, radius):
         super().__init__("Коло")
@@ -71,7 +63,7 @@ class Circle(Figure):
         return 2 * math.pi * self.radius
 
     def area(self):
-        return math.pi * self.radius**2
+        return math.pi * self.radius ** 2
 
 
 def parse_input(line):
@@ -94,7 +86,8 @@ def parse_input(line):
 
 def main():
     while True:
-        print("Формат вводу, наприклад:\nКвадрат Point1 0 0 Point2 1 1 Side 1\nПрямокутник Point1 0 0 Point2 2 3\nКоло Center 0 0 Radius 1")
+        print(
+            "Формат вводу, наприклад:\nКвадрат Point1 0 0 Point2 1 1 Side 1\nПрямокутник Point1 0 0 Point2 2 3\nКоло Center 0 0 Radius 1")
         print("Введіть дані для геометричної фігури або натисніть Enter для завершення:")
         line = input()
         if not line:
@@ -107,6 +100,7 @@ def main():
             )
         else:
             print("Помилка: невірний формат даних або невідома фігура. Спробуйте ще раз.")
+
 
 if __name__ == "__main__":
     main()
